@@ -48,7 +48,8 @@ function clumpFindingProblem(file) {
             var l = controls[1];                         //window size L
             var t = controls[2];                         //limit, appearing at least t times
            
-            fs.writeFileSync('./output/output_clump.txt',findClumps(genome,k,l,t));
+            fs.writeFileSync('./output/output_clump_ecoli.txt',findClumps(genome,k,l,t));
+            //fs.writeFileSync('./output/output_clump2.txt',betterClumpFinding(genome,k,l,t));
 
             var stopTime = new Date().getTime();
             console.log("Stopping execution at : " + stopTime);
@@ -71,17 +72,10 @@ function findClumps(genome,k,l,t) {
     var fs = require('fs');
     var hmp = require('./code1');
     var patternMatcher = require('./code3');
-    /*var words = [];
-    for(var i=0;i<=genome.length-l;i++) {
-        var genome_substr = hmp.computeText(genome,i,l);
-        var wordArray = hmp.fasterFrequentWordsByLimit(genome_substr,k,t);
-        wordArray.forEach(function(w) {
-            words.push(w);
-        });
-    }
-    console.log(words);*/
+
     var words = hmp.fasterFrequentWordsByLimit(genome,k,t);
     //words = hmp.uniqueArray(words);
+    var count = 0;
     if(words.length>0) {
         words.forEach(function(word) {
             var positions = patternMatcher.matchPattern(word,genome);
@@ -92,12 +86,14 @@ function findClumps(genome,k,l,t) {
                     break; 
             }
             if(isPresent) {
-                console.log(word);
+                count++;
+                //console.log(word);
                 output = output + word + " ";
             }
             
         });
     }
+    output = output + "\n " + count; 
     return output;
 }
 
@@ -105,6 +101,37 @@ function findClumps(genome,k,l,t) {
 
 function betterClumpFinding(genome,k,l,t) {
     
-    
+    var hmp = require('./code1');
+    var frequentPatterns = [];
+    var clump = [];
+    for(var i=0;i<Math.pow(4,k);i++) {
+        clump[i]=0;
+    }
+    var text = hmp.computeText(genome,0,l);
+    var frequencyArray = hmp.computingFrequencies(text,k);
+    for(var i=0;i<Math.pow(4,k);i++) {
+        if(frequencyArray[i]>=t)
+            clump[i]=1;
+    }
+    for(var i=1;i<=genome.length-l;i++) {
+        var firstPattern = hmp.computeText(genome,i-1,k);
+        var j = hmp.patternToNumber(firstPattern);
+        frequencyArray[j]--;
+        var lastPattern = hmp.computeText(genome,i+l-k,k);
+        j=hmp.patternToNumber(lastPattern);
+        frequencyArray[j]++;
+        if(frequencyArray[j]>=t) 
+            clump[j]=1;
+    }
+    var output = "";
+    for(var i=0;i<Math.pow(4,k);i++) {
+        if(clump[i]==1) {
+            var pattern = hmp.NumberToPattern(i,k);
+            frequentPatterns.push(pattern);
+            output = output + pattern + " ";
+        }
+    }
+    //return frequentPatterns;
+    return output;
 }
 

@@ -18,89 +18,57 @@ than general quickSort
 
 'use strict';
 
-var fs = require('fs');
-var startTime = new Date().getTime();
-console.log("Starting execution at : " + startTime);
-console.log("User entered option : " + process.argv[4]);
-var option = parseInt(process.argv[4]);
-
-//--------------testing few codes---------------------------------------------
-//Testing of few modules to check consistency
-//trigger test suite on --test flag
-
-if(process.argv[5]!=undefined) {
-    var testin = process.argv[5].toString();
-    console.log(testin);
-    if(testin=="--test") {
-        //test suite started
-        var randomIndex = Math.floor(Math.random()*Math.pow(4,process.argv[3]) + 1);
-        var pattern = NumberToPattern(randomIndex,process.argv[3]);
-        var restoredIndex = patternToNumber(pattern);
-        console.log("Testing numberToPattern and patternToNumber..");
-        console.log("working with Random Index : " + randomIndex);
-        console.log("patternToNumber : " + pattern);
-        console.log("numberToPattern : " + restoredIndex);
-        if(randomIndex===restoredIndex) console.log("Tesk OK");
-        else console.log("Test Failure");
-        fs.readFile('./test/test.txt',function(err,data) {
-            if(err) throw err;
-            else {
-                
-                var testInArray = data.toString().split('\n');
-                var testGenome = testInArray[0].toString();
-                var testK = parseInt(testInArray[1]);
-                var testPos = parseInt(testInArray[2]);
-                var testValue = parseInt(testInArray[3]);
-                
-                console.log("Testing computingFrequencies...");
-                var testFrequencyArray = computingFrequencies(testGenome,testK);
-                
-                //console.log(testFrequencyArray);
-                if(testFrequencyArray[testPos]===testValue)
-                    console.log("Test OK");
-                else
-                    console.log("Test Failed");
-                
-                console.log("Testing fasterFrequentWords..");
-                console.log(fasterFrequentWords(testGenome,testK));
-                
-                console.log("Testing findingFrequentWordsBySorting..");
-                console.log(findingFrequentWordsBySorting(testGenome,testK));
+function hiddenMessageFinder(file,option,k,limit) {
+ 
+    var fs = require('fs');
+    var startTime = new Date().getTime();
+    console.log("Starting execution at : " + startTime);
+    console.log("User entered option : " + process.argv[4]);
+    console.log("Reading file started ... ");
+    fs.readFile(file,function(err,data) {
+        console.log("Reading file ends..");
+        if(err) throw err;
+        else {
+            var input = data.toString();
+            var textArray = input.split('\n');
+            //console.log(textArray);
+            var text = textArray[0].toUpperCase();
+            var k = textArray[1];
+            console.log(option);
+            switch(option) {
+                    case 1 : fs.writeFileSync('./output/output_genome.txt',fasterFrequentWords(text,k));
+                    break;
+                    case 2 : fs.writeFileSync('./output/output_genome2.txt',findingFrequentWordsBySorting(text,k));
+                    break;
+                    case 3 : fs.writeFileSync('./output/output_genome3.txt',frequentWords(text,k));
+                    break;
+                    case 4 : fs.writeFileSync('./output/output_genome4.txt',fasterFrequentWordsByLimit(text,k,limit));
+                    break;
+                    default : console.log("Enter valid option");
+                    break;
             }
-        });
-        return 0;
-    }
+            var stopTime = new Date().getTime();
+            console.log("Stopping execution at : " + stopTime);
+            console.log("Total Time taken : " + (stopTime - startTime) + " ms");
+        }
+    });
 }
 
-//--------------testing over--------------------------------------------------
 
-console.log("Reading file started ... ");
-fs.readFile(process.argv[2],function(err,data) {
-    console.log("Reading file ends..");
-    if(err) throw err;
-    else {
-        var input = data.toString();
-        var textArray = input.split('\n');
-        //console.log(textArray);
-        var text = textArray[0].toUpperCase();
-        var k = textArray[1];
-        console.log(option);
-        switch(option) {
-                case 1 : fs.writeFileSync('./output/output_genome.txt',fasterFrequentWords(text,process.argv[3]));
-                break;
-                case 2 : fs.writeFileSync('./output/output_genome2.txt',findingFrequentWordsBySorting(text,process.argv[3]));
-                break;
-                case 3 : fs.writeFileSync('./output/output_genome3.txt',frequentWords(text,process.argv[3]));
-                break;
-                default : console.log("Enter valid option");
-                break;
-        }
-        var stopTime = new Date().getTime();
-        console.log("Stopping execution at : " + stopTime);
-        console.log("Total Time taken : " + (stopTime - startTime) + " ms");
-    }
-});
 
+//----------------------Exporting functions---------------------------------------
+
+exports.hiddenMessageFinder = hiddenMessageFinder;
+exports.fasterFrequentWords = fasterFrequentWords;
+exports.findingFrequentWordsBySorting = findingFrequentWordsBySorting;
+exports.fasterFrequentWordsByLimit = fasterFrequentWordsByLimit;
+exports.computingFrequencies = computingFrequencies;
+exports.patternToNumber = patternToNumber;
+exports.NumberToPattern = NumberToPattern;
+exports.computeText = computeText;
+exports.uniqueArray = uniq;
+
+//--------------------Exporting Ends----------------------------------------------
 
 function frequentWords(text,k) {
 	var frequentPatterns = [];
@@ -238,6 +206,24 @@ function fasterFrequentWords(text,k) {
         }
     }
     console.log("Maxcount count = " + ct);
+	return frequentPatterns;
+}
+
+//fasterFrequentWords with limit option
+
+function fasterFrequentWordsByLimit(text,k,limit) {
+	var frequentPatterns = [];
+	var frequencyArray = computingFrequencies(text,k);
+    //fs.writeFileSync('frequency.txt',frequencyArray);
+	var ct = 0;
+    for(var i=0;i<Math.pow(4,k);i++) {
+        if(frequencyArray[i]>=limit) {
+            var pattern = NumberToPattern(i,k);
+            frequentPatterns.push(pattern);
+            ct++;
+        }
+    }
+    //console.log("Number of " + k + " mers appearing " + limit + " or more times = " + ct);
 	return frequentPatterns;
 }
 

@@ -44,12 +44,12 @@ function clumpFindingProblem(file) {
             var controls = ctrl.split(/\b\s+(?!$)/);
             //console.log(controls);
 
-            var k = controls[0];                         //k mer
-            var l = controls[1];                         //window size L
-            var t = controls[2];                         //limit, appearing at least t times
+            var k = parseInt(controls[0]);                         //k mer  parseInt must
+            var l = parseInt(controls[1]);                         //window size L
+            var t = parseInt(controls[2]);                         //limit, appearing at least t times
            
-            fs.writeFileSync('./output/output_clump_ecoli.txt',findClumps(genome,k,l,t));
-            //fs.writeFileSync('./output/output_clump2.txt',betterClumpFinding(genome,k,l,t));
+            //fs.writeFileSync('./output/output_clump_ecoli.txt',findClumps(genome,k,l,t));
+            fs.writeFileSync('./output/output_clump_ecoli.txt',betterClumpFinding(genome,k,l,t));
 
             var stopTime = new Date().getTime();
             console.log("Stopping execution at : " + stopTime);
@@ -108,30 +108,36 @@ function betterClumpFinding(genome,k,l,t) {
         clump[i]=0;
     }
     var text = hmp.computeText(genome,0,l);
+    console.log(text);
     var frequencyArray = hmp.computingFrequencies(text,k);
     for(var i=0;i<Math.pow(4,k);i++) {
         if(frequencyArray[i]>=t)
             clump[i]=1;
     }
-    for(var i=1;i<=genome.length-l;i++) {
+    for(var i=1;i<genome.length-l;i++) {
         var firstPattern = hmp.computeText(genome,i-1,k);
         var j = hmp.patternToNumber(firstPattern);
         frequencyArray[j]--;
-        var lastPattern = hmp.computeText(genome,i+l-k,k);
+        var n = i+l-k;
+        var lastPattern = hmp.computeText(genome,n,k);
         j=hmp.patternToNumber(lastPattern);
         frequencyArray[j]++;
-        if(frequencyArray[j]>=t) 
+        if(frequencyArray[j]>=t) {
             clump[j]=1;
+        }
     }
+    var count = 0;
     var output = "";
     for(var i=0;i<Math.pow(4,k);i++) {
         if(clump[i]==1) {
             var pattern = hmp.NumberToPattern(i,k);
             frequentPatterns.push(pattern);
             output = output + pattern + " ";
+            count++;
         }
     }
     //return frequentPatterns;
+    console.log("Count : " + count);
     return output;
 }
 

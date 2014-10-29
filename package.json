@@ -6,6 +6,7 @@
         "jasmine-node" : "~1.14.3"
     },
     "scripts" : {
+        "start" : "node runner.js",
         "test" : "jasmine-node spec"
     }
 }

@@ -98,6 +98,7 @@ function findClumps(genome,k,l,t) {
 }
 
 //betterClumpFinding algorithm as described in Charging Station
+//performs fast calculation on large inputs
 
 function betterClumpFinding(genome,k,l,t) {
     

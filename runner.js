@@ -22,6 +22,10 @@ console.log("3.fasterFrequentWordsByLimit");
 console.log("4.reverseComplement");
 console.log("5.matchPattern");
 console.log("6.findClumps");
+console.log("7.skewFinder");
+console.log("8.hammingDistance");
+console.log("9.Approximate pattern matcher");
+console.log("10.Approximate pattern count");
 console.log("---------------------------------------");
 
 prompt.start();
@@ -62,6 +66,26 @@ function runModule(option,input,k) {
             case 6 : 
                     var cfp = require('./js/code4');
                     console.log(cfp.clumpFindingProblem(input));
+            break;
+            
+            case 7 : 
+                    var sk = require('./js/code5');
+                    sk.skewFinder(input);
+            break;
+            
+            case 8 :
+                    var ham = require('./js/code6');
+                    ham.moreElusiveHiddenMessage(input,1);
+            break;
+            
+            case 9 :
+                    var ham = require('./js/code6');
+                    ham.moreElusiveHiddenMessage(input,2);
+            break;
+            
+            case 10 :
+                    var ham = require('./js/code6');
+                    ham.moreElusiveHiddenMessage(input,3);
             break;
             
             default : 

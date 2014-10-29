@@ -1,0 +1,11 @@
+{
+    "name" : "coursera-bioinformatics",
+    "author" : "Koustuv Sinha",
+    "version" : "1.0.0",
+    "devDependencies" : {
+        "jasmine-node" : "~1.14.3"
+    },
+    "scripts" : {
+        "test" : "jasmine-node spec"
+    }
+}

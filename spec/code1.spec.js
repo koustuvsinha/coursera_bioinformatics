@@ -30,5 +30,14 @@ describe("Test suite for hiddenMessageProblem",function() {
         
         expect(hmp.uniqueArray(duplicateArray)).toEqual(singleArray);
     });
+
+    it("Testing faster frequent words",function() {
+        var text = 'AACTGAGTCAAACTAAGTAACTGTGCGAAACTTATA';
+        var k = 4;
+        var expected = ['AACT'];
+
+        expect(hmp.fasterFrequentWords(text,k)).toEqual(expected);
+
+    });
                
 });

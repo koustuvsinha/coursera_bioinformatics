@@ -26,6 +26,7 @@ console.log("7.skewFinder");
 console.log("8.hammingDistance");
 console.log("9.Approximate pattern matcher");
 console.log("10.Approximate pattern count");
+console.log("11.Frequent k-mer with mismatch");
 console.log("---------------------------------------");
 
 prompt.start();
@@ -86,6 +87,11 @@ function runModule(option,input,k) {
             case 10 :
                     var ham = require('./js/code6');
                     ham.moreElusiveHiddenMessage(input,3);
+            break;
+
+            case 11 :
+                    var ham = require('./js/code6');
+                    ham.moreElusiveHiddenMessage(input,4);
             break;
             
             default : 

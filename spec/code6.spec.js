@@ -37,11 +37,19 @@ describe('Test suite for Some hidden messages are more elusive for others',funct
     });
     
     it('Testing for approximate pattern matcher count',function() {
-        var pattern = 'AAAAA';
-        var text = 'AACAAGCTGATAAACATTTAAAGAG';
+        var pattern = 'ATGA';
+        var text = 'ACGTTGCATGTCGCATGATGCATGAGAGCT';
         var d = 1;
         var expected = 4;
         expect(ham.approximatePatternCount(pattern,text,d)).toEqual(expected);
     });
+
+    it('Testing for most frequent k-mer with mismatches',function() {
+        var text = 'ACGTTGCATGTCGCATGATGCATGAGAGCT';
+        var k = 4;
+        var d = 1;
+        var expected = ['GATG','ATGC','ATGT'];
+        expect(ham.findApproxFrequentWords(text,k,d)).toEqual(expected.sort());
+    })
                         
 });

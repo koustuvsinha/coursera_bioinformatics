@@ -27,6 +27,8 @@ console.log("8.hammingDistance");
 console.log("9.Approximate pattern matcher");
 console.log("10.Approximate pattern count");
 console.log("11.Frequent k-mer with mismatch");
+console.log("12.Frequent k-mer with mismatch and reverse");
+console.log("13.neighbourCalculation");
 console.log("---------------------------------------");
 
 prompt.start();
@@ -92,6 +94,16 @@ function runModule(option,input,k) {
             case 11 :
                     var ham = require('./js/code6');
                     ham.moreElusiveHiddenMessage(input,4);
+            break;
+
+            case 12 :
+                    var ham = require('./js/code6');
+                    ham.moreElusiveHiddenMessage(input,5);
+            break;
+
+            case 13 :
+                    var ne = require('./js/code7');
+                    ne.neighbourCalculation(input);
             break;
             
             default : 

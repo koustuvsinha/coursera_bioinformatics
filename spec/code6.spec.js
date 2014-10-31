@@ -50,6 +50,14 @@ describe('Test suite for Some hidden messages are more elusive for others',funct
         var d = 1;
         var expected = ['GATG','ATGC','ATGT'];
         expect(ham.findApproxFrequentWords(text,k,d)).toEqual(expected.sort());
-    })
+    });
+
+    it('Testing for most frequent k-mer with mismatches and complement',function() {
+        var text = 'ACGTTGCATGTCGCATGATGCATGAGAGCT';
+        var k = 4;
+        var d = 1;
+        var expected = ['ATGT', 'ACAT'];
+        expect(ham.findApproxFrequentWordsReverse(text,k,d)).toEqual(expected.sort());
+    });
                         
 });

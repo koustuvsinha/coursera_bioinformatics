@@ -21,6 +21,7 @@ exports.hammingDistance = hammingDistance;
 exports.approximatePatternMatcher = approximatePatternMatcher;
 exports.approximatePatternCount = approximatePatternCount;
 exports.findApproxFrequentWords = findApproxFrequentWords;
+exports.findApproxFrequentWordsReverse = findApproxFrequentWordsReverse;
 
 //-----------------exporting ends-----------------------------
 
@@ -78,6 +79,17 @@ function moreElusiveHiddenMessage(file,option) {
                     var t = parseInt(controls[1]);
 
                     fs.writeFileSync('./output/output_mismatched.txt',findApproxFrequentWords(text,k,t));
+
+                break;
+
+                case 5 :
+
+                    var text = textArray[0].toString().toUpperCase().replace(/[^a-zA-Z]/,"");
+                    var controls = textArray[1].toString().split(/\b\s+(?!$)/);
+                    var k = parseInt(controls[0]);
+                    var t = parseInt(controls[1]);
+
+                    fs.writeFileSync('./output/output_mismatched_rev.txt',findApproxFrequentWordsReverse(text,k,t));
 
                 break;
             }
@@ -141,17 +153,13 @@ function approximatePatternCount(pattern,text,d) {
  
     var hmp = require('./code1');
     var count = 0;
-    var debug = "";
     for(var i=0;i<=text.length-pattern.length;i++) {
         var pattern2 = hmp.computeText(text,i,pattern.length);
         var dist = hammingDistance(pattern,pattern2);
         if(dist<=d) {
-            debug = debug + "index : " + i + ", " + pattern + "," + pattern2 + " : " + dist + "\n";
             count++;
         }
     }
-    var fs = require('fs');
-    fs.writeFileSync('./output/output_log.txt',debug);
     return count;
 }
 
@@ -160,10 +168,30 @@ function computingApproximateFrequencies(text,k,d) {
     var hmp = require('./code1');
     var frequencyArray = [];
     for(var i=0;i<Math.pow(4,k);i++) {
-        frequencyArray[i]=0;
         var pattern = hmp.NumberToPattern(i,k);
-        var patternNumber = hmp.patternToNumber(pattern);
-        frequencyArray[patternNumber] = approximatePatternCount(pattern,text,d);
+        frequencyArray[i] = approximatePatternCount(pattern,text,d);
+    }
+    
+    return frequencyArray;
+
+}
+
+function computingApproximateFrequenciesWithReverse(text,k,d) {
+
+    var hmp = require('./code1');
+    var rev = require('./code2');
+    var frequencyArray = [];
+    for(var i=0;i<Math.pow(4,k);i++) {
+        frequencyArray[i] = 0;
+    }
+    for(var i=0;i<Math.pow(4,k);i++) {
+        if(frequencyArray[i]==0) {
+            var pattern = hmp.NumberToPattern(i,k);
+            var reverse = rev.reverseComplement(pattern);
+            var ctP = approximatePatternCount(pattern,text,d);
+            var ctD = approximatePatternCount(reverse,text,d);
+            frequencyArray[i] = ctP + ctD;
+        }
     }
     
     return frequencyArray;
@@ -188,3 +216,23 @@ function findApproxFrequentWords(text,k,d) {
 
     return frequentWords;
 }
+
+function findApproxFrequentWordsReverse(text,k,d) {
+
+    var hmp = require('./code1');    
+    var frequentWords = [];
+    var frequencyArray = computingApproximateFrequenciesWithReverse(text,k,d);
+    var maxCount = frequencyArray.reduce(function(i,max) {
+        if(i>max) return i;
+        else return max;
+    });
+
+    for(var i=0;i<Math.pow(4,k);i++) {
+        if(frequencyArray[i]===maxCount) {
+            frequentWords.push(hmp.NumberToPattern(i,k));
+        }
+    }
+
+    return frequentWords;
+}
+

@@ -4,13 +4,13 @@ describe('Test suite for Some hidden messages are more elusive for others',funct
     
     var ham;
     beforeEach(function() {
-        ham = require('../js/code6');
+        ham = require('../../js/week1/code6');
     });
     
     it('Testing for hamming distance with equal length',function() {
-        var genome1 = 'GGGCCGTTGGT';
-        var genome2 = 'GGACCGTTGAC';
-        var expected = 3;
+        var genome1 = 'CAGAAAGGAAGGTCCCCATACACCGACGCACCAGTTTA';
+        var genome2 = 'CACGCCGTATGCATAAACGAGCCGCACGAACCAGAGAG';
+        var expected = 23;
         expect(ham.hammingDistance(genome1,genome2)).toEqual(expected);
     });
     
@@ -37,10 +37,10 @@ describe('Test suite for Some hidden messages are more elusive for others',funct
     });
     
     it('Testing for approximate pattern matcher count',function() {
-        var pattern = 'ATGA';
-        var text = 'ACGTTGCATGTCGCATGATGCATGAGAGCT';
-        var d = 1;
-        var expected = 4;
+        var pattern = 'CCC';
+        var text = 'CATGCCATTCGCATTGTCCCAGTGA';
+        var d = 2;
+        var expected = 15;
         expect(ham.approximatePatternCount(pattern,text,d)).toEqual(expected);
     });
 

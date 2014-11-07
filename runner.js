@@ -47,13 +47,13 @@ function runModule(option,input,k) {
     switch(option) {
      
             case 1 :
-                    var hmp = require('./js/code1');
+                    var hmp = require('./js/week1/code1');
                     console.log(hmp.hiddenMessageFinder(input,1,k,0));
                     
             break;
             
             case 3 :
-                    var hmp = require('./js/code1');
+                    var hmp = require('./js/week1/code1');
                     prompt.start();
                     prompt.get(['limit'],function(err,result) {
                         if(err) { throw err; }
@@ -67,42 +67,42 @@ function runModule(option,input,k) {
             break;
             
             case 6 : 
-                    var cfp = require('./js/code4');
+                    var cfp = require('./js/week1/code4');
                     console.log(cfp.clumpFindingProblem(input));
             break;
             
             case 7 : 
-                    var sk = require('./js/code5');
+                    var sk = require('./js/week1/code5');
                     sk.skewFinder(input);
             break;
             
             case 8 :
-                    var ham = require('./js/code6');
+                    var ham = require('./js/week1/code6');
                     ham.moreElusiveHiddenMessage(input,1);
             break;
             
             case 9 :
-                    var ham = require('./js/code6');
+                    var ham = require('./js/week1/code6');
                     ham.moreElusiveHiddenMessage(input,2);
             break;
             
             case 10 :
-                    var ham = require('./js/code6');
+                    var ham = require('./js/week1/code6');
                     ham.moreElusiveHiddenMessage(input,3);
             break;
 
             case 11 :
-                    var ham = require('./js/code6');
+                    var ham = require('./js/week1/code6');
                     ham.moreElusiveHiddenMessage(input,4);
             break;
 
             case 12 :
-                    var ham = require('./js/code6');
+                    var ham = require('./js/week1/code6');
                     ham.moreElusiveHiddenMessage(input,5);
             break;
 
             case 13 :
-                    var ne = require('./js/code7');
+                    var ne = require('./js/week1/code7');
                     ne.neighbourCalculation(input);
             break;
             

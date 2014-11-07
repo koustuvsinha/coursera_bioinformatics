@@ -22,6 +22,7 @@ findClumps algorithm is self-brewn
 
 exports.clumpFindingProblem = clumpFindingProblem;
 exports.findClumps = findClumps;
+exports.betterClumpFinding = betterClumpFinding;
 
 //-----------------exporting ends-----------------------------
 

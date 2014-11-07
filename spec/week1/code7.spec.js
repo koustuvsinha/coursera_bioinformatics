@@ -3,7 +3,7 @@ describe('Test suite for code7',function() {
 	var t;
 
 	beforeEach(function() {
-		t = require('../js/code7');	
+		t = require('../../js/week1/code7');	
 	});
 
 	it('Testing immediate neighbours',function() {

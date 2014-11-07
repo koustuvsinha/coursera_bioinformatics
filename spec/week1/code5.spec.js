@@ -4,7 +4,7 @@ describe('Test suite for skew calculation',function() {
     
     var sk;
     beforeEach(function() {
-        sk = require('../js/code5');
+        sk = require('../../js/week1/code5');
     });
     
     it('Testing for skew ouput',function() {
@@ -14,8 +14,8 @@ describe('Test suite for skew calculation',function() {
     });
     
     it('Testing for minimum skew',function() {
-        var genome = 'TAAAGACTGCCGAGAGGCCAACACGAGTGCTAGAACGAGGGGCGTAAACGCGGGTCCGAT';
-        var expected = [11,24];
+        var genome = 'CATTCCAGTACTTCATGATGGCGTGAAGA';
+        var expected = [14,15,16];
         expect(sk.minSkew(genome).array).toEqual(expected);
     });
 });

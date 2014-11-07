@@ -4,7 +4,7 @@ describe("Test suite for hiddenMessageProblem",function() {
     var hmp;
     
     beforeEach(function() {
-        hmp = require('../js/code1');
+        hmp = require('../../js/week1/code1');
     });
     
     it("Testing for patternToNumber using hard coded values",function() {

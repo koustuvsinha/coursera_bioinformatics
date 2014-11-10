@@ -22,6 +22,8 @@ exports.approximatePatternMatcher = approximatePatternMatcher;
 exports.approximatePatternCount = approximatePatternCount;
 exports.findApproxFrequentWords = findApproxFrequentWords;
 exports.findApproxFrequentWordsReverse = findApproxFrequentWordsReverse;
+exports.computingApproximateFrequencies = computingApproximateFrequencies
+exports.computingApproximateFrequenciesWithReverse = computingApproximateFrequenciesWithReverse;
 
 //-----------------exporting ends-----------------------------
 

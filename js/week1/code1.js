@@ -67,6 +67,7 @@ exports.patternToNumber = patternToNumber;
 exports.NumberToPattern = NumberToPattern;
 exports.computeText = computeText;
 exports.uniqueArray = uniq;
+exports.qsort = qsort;
 
 //--------------------Exporting Ends----------------------------------------------
 

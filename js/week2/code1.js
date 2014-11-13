@@ -110,12 +110,12 @@ function encodePeptide(text,peptide,rna_codon_table) {
     
     for(var i=0;i<=len;i++) {
         
-        var per = (i/len)*100;
+        /*var per = (i/len)*100;
         if(i%100==0) {
             process.stdout.clearLine();  // clear current text
             process.stdout.cursorTo(0);
             process.stdout.write((Math.round(per*100)/100).toString() + "%");
-        }
+        }*/
         
         var dna = text.substring(i,i+dnaLength);
         var dna_rev = rev.reverseComplement(dna);
